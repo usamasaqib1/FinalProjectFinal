@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import java.nio.file.attribute.UserDefinedFileAttributeView;
 import java.util.ArrayList;
 
 /**
@@ -45,7 +46,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
 
 
-
+    //ArrayList<UserDefinedFileAttributeView> abc;
 
 
 }
