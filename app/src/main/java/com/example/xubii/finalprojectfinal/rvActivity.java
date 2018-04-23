@@ -1,0 +1,160 @@
+package com.example.xubii.finalprojectfinal;
+
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
+import android.view.View;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+
+public class rvActivity extends AppCompatActivity implements RecyclerView.OnItemTouchListener {
+    private static final String TAG ="rvActivity";
+    FirebaseDatabase database;
+    DatabaseReference mRef;
+    FirebaseAuth mAuth;
+    ArrayList<ground>groundList;
+    GestureDetector gestureDetector;
+    RecyclerView rv;
+    String[]key;
+    MyAdapter adapter;
+    ProgressDialog pd;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_rv);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        pd= new ProgressDialog(this);
+        pd.setMessage("Creating User");
+
+        Intent in=getIntent();
+        String nkey =in.getStringExtra("keyword");
+       key=nkey.split(" ");
+        groundList=new ArrayList<>();
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+        fab.hide();
+
+        mAuth=FirebaseAuth.getInstance();
+         database = FirebaseDatabase.getInstance();
+         mRef = database.getReference("Grounds");
+
+        // Read from the database
+        mRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                pd.show();
+                for(DataSnapshot ds: dataSnapshot.getChildren()) {
+
+                    for (int i = 0; i < key.length; i++) {
+                        if (ds.getKey().contains(key[i])) {
+                            String s=ds.getKey();
+                            ground temp = new ground();
+
+                        //    temp.setGroundName(ds.child(key[i]).getValue(ground.class).getGroundName());
+                         //   temp.setGroundName((String)ds.child(s).child("groundName").getValue());
+                            temp.setGroundName(ds.child("groundName").getValue(String.class));
+                            temp.setDetails(ds.child("details").getValue(String.class));
+                            temp.setEmail(ds.child("email").getValue(String.class));
+                            temp.setImage(ds.child("image").getValue(String.class));
+                            temp.setLocation(ds.child("location").getValue(String.class));
+                            temp.setOwnerName(ds.child("ownerName").getValue(String.class));
+                            temp.setPhone(ds.child("phone").getValue(String.class));
+                            temp.setRatting(ds.child("ratting").getValue(Integer.class));
+                            temp.setVotes(ds.child("votes").getValue(Integer.class));
+
+                            groundList.add(temp);
+                            adapter.notifyDataSetChanged();
+                            break;
+                        }
+                    }
+                    pd.dismiss();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+
+        rv = (RecyclerView) findViewById(R.id.rcv);
+       adapter = new MyAdapter(groundList, R.layout.recyclerviewlayout,this);
+
+        rv.setLayoutManager(new LinearLayoutManager(this));
+        rv.addOnItemTouchListener(this);
+        rv.setItemAnimator(new DefaultItemAnimator());
+        rv.setAdapter(adapter);
+        gestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onDown(MotionEvent motionEvent) {
+                return false;
+            }
+
+            @Override
+            public void onShowPress(MotionEvent motionEvent) {
+            }
+
+            @Override
+            public boolean onSingleTapUp(MotionEvent motionEvent) {
+                View child = rv.findChildViewUnder(motionEvent.getX(), motionEvent.getY());
+                if (child != null) {
+                    //if tap was performed on some recyclerview row item
+                    Integer i = rv.getChildAdapterPosition(child); //index of item which was clicked
+
+                }
+                return true;
+            }
+
+        });
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+        View childView = rv.findChildViewUnder(e.getX(), e.getY());
+
+
+        if (childView != null && gestureDetector.onTouchEvent(e)) {
+
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+
+    }
+
+    @Override
+    public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+    }
+}
