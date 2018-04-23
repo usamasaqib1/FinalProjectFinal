@@ -11,16 +11,17 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rcv"
         android:layout_width="372dp"
-        android:layout_height="482dp"
+        android:layout_height="428dp"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchBar" />
+        app:layout_constraintTop_toBottomOf="@+id/searchBar"
+        app:layout_constraintVertical_bias="0.238" />
 
     <EditText
         android:id="@+id/searchBar"
-        android:layout_width="310dp"
+        android:layout_width="262dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
@@ -34,11 +35,22 @@
         android:layout_width="40dp"
         android:layout_height="37dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="?android:attr/actionModeWebSearchDrawable"
         android:onClick="searchAgain"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button12"
+        android:layout_width="44dp"
+        android:layout_height="39dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:drawable/ic_btn_speak_now"
+        android:onClick="speechToText"
+        app:layout_constraintEnd_toStartOf="@+id/button10"
         app:layout_constraintStart_toEndOf="@+id/searchBar"
         app:layout_constraintTop_toTopOf="parent" />
 
