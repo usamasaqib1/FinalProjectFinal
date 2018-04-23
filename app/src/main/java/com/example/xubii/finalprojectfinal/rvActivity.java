@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.EditText;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -42,21 +43,16 @@ public class rvActivity extends AppCompatActivity implements RecyclerView.OnItem
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         pd= new ProgressDialog(this);
-        pd.setMessage("Creating User");
-
+        pd.setMessage("Loading...");
+        pd.show();
         Intent in=getIntent();
         String nkey =in.getStringExtra("keyword");
+        EditText search = (EditText) findViewById(R.id.searchBar);
+        search.setText(nkey);
+
+        nkey=nkey.toLowerCase();
        key=nkey.split(" ");
         groundList=new ArrayList<>();
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        fab.hide();
 
         mAuth=FirebaseAuth.getInstance();
          database = FirebaseDatabase.getInstance();
@@ -68,11 +64,11 @@ public class rvActivity extends AppCompatActivity implements RecyclerView.OnItem
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                pd.show();
+
                 for(DataSnapshot ds: dataSnapshot.getChildren()) {
 
                     for (int i = 0; i < key.length; i++) {
-                        if (ds.getKey().contains(key[i])) {
+                        if (ds.getKey().toLowerCase().contains(key[i])) {
                             String s=ds.getKey();
                             ground temp = new ground();
 
@@ -93,8 +89,9 @@ public class rvActivity extends AppCompatActivity implements RecyclerView.OnItem
                             break;
                         }
                     }
-                    pd.dismiss();
+
                 }
+                pd.dismiss();
 
             }
 
@@ -105,6 +102,7 @@ public class rvActivity extends AppCompatActivity implements RecyclerView.OnItem
             }
         });
 
+
         rv = (RecyclerView) findViewById(R.id.rcv);
        adapter = new MyAdapter(groundList, R.layout.recyclerviewlayout,this);
 
@@ -112,6 +110,7 @@ public class rvActivity extends AppCompatActivity implements RecyclerView.OnItem
         rv.addOnItemTouchListener(this);
         rv.setItemAnimator(new DefaultItemAnimator());
         rv.setAdapter(adapter);
+
         gestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
             @Override
             public boolean onDown(MotionEvent motionEvent) {
@@ -136,6 +135,15 @@ public class rvActivity extends AppCompatActivity implements RecyclerView.OnItem
         });
     }
 
+    public void searchAgain(View v)
+    {
+        EditText searchbar= (EditText) findViewById(R.id.searchBar);
+
+        Intent i= new Intent(this, rvActivity.class);
+        i.putExtra("keyword",searchbar.getText().toString());
+        startActivity(i);
+        finish();
+    }
     @Override
     public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
         View childView = rv.findChildViewUnder(e.getX(), e.getY());
