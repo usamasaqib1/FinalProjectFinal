@@ -25,7 +25,6 @@ public class login extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser!=null)
@@ -33,21 +32,21 @@ public class login extends AppCompatActivity {
             Intent i = new Intent(this,searchScreen.class);
             startActivity(i);
         }
+
         mAuthListener =
                 new FirebaseAuth.AuthStateListener() {
             @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth)
+            {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    // User is signed in
-                  //  Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                if (user != null)
+                {
                     toastMessage("Successfully signed in with: " + user.getEmail());
-                } else {
-                    // User is signed out
-                 //   Log.d(TAG, "onAuthStateChanged:signed_out");
+                }
+                else
+                {
                     toastMessage("Successfully signed out.");
                 }
-                // ...
             }
         };
 
