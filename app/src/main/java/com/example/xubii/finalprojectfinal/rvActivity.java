@@ -86,7 +86,6 @@ public class rvActivity extends AppCompatActivity implements RecyclerView.OnItem
                             temp.setPhone(ds.child("phone").getValue(String.class));
                             temp.setRatting(ds.child("ratting").getValue(Integer.class));
                             temp.setVotes(ds.child("votes").getValue(Integer.class));
-
                             groundList.add(temp);
                             adapter.notifyDataSetChanged();
                             break;
@@ -192,3 +191,4 @@ public class rvActivity extends AppCompatActivity implements RecyclerView.OnItem
         }
     }
 }
+//kjgkgkj
