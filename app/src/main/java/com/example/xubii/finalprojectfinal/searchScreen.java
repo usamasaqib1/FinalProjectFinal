@@ -13,19 +13,30 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 
 public class searchScreen extends AppCompatActivity {
     private static final int VOICE_RECOGNITION_REQUEST = 1234;
+    private static final String TAG = "MainActivity";
+    private AdView mAdView;
+    private FirebaseAnalytics mFirebaseAnalytics;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_screen);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
         changeStatusBarColor("#ff669900");
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
+        //mFirebaseAnalytics.logEvent();
 
     }
     public void search(View v)

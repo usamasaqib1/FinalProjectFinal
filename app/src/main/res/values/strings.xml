@@ -27,5 +27,7 @@
     <string name="title_activity_sign_up">signUp</string>
     <string name="facebook_app_id">166810833984477</string>
     <string name="fb_login_protocol_scheme">fb166810833984477</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
 
 </resources>

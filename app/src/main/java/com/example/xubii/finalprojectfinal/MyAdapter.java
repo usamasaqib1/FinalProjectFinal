@@ -47,22 +47,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder>
             holder.name.setText(items.get(position).getGroundName());
             holder.votes.setText(items.get(position).getVotes().toString());
             holder.location.setText(items.get(position).getLocation());
-           // holder.imgView.setImageURI(Uri.parse(items.get(position).getImage()));
             holder.rb.setMax(5);
             holder.rb.setNumStars(5);
             holder.rb.setRating(items.get(position).getRatting());
             FirebaseAuth mAuth = FirebaseAuth.getInstance();
-         //   FirebaseDatabase storage=FirebaseDatabase.getInstance();
-        //    AtomicMarkableReference storage;
-            StorageReference mStorage = FirebaseStorage.getInstance().getReference().child("Images/"+items.get(position).getGroundName()+".jpg");
-          //  StorageReference mStorage = FirebaseStorage.getInstance().getReference().
-         //   StorageReference  mStorage= FirebaseStorage.getInstance().getReferenceFromUrl(Uri.parse(items.get(position).getImage()));
-           // StorageReference  mStorage= FirebaseStorage.getInstance().getReferenceFromUrl(Uri.parse(items.get(position).getImage()));
-          //  StorageReference  mStorage= FirebaseStorage.getInstance().child();
-          //  StorageReference  mStorage= storage.getReferenceFromUrl(items.get(position).getImage());
-         //   StorageReference gsReference = storage.getReferenceFromUrl("gs://bucket/images/stars.jpg");
-            //keep an eye on it
-            Glide.with(context)
+            StorageReference mStorage = FirebaseStorage.getInstance().getReference().child("Images/"+items.get(position).getGroundName()+" "+items.get(position).getLocation()+".jpg");
+         Glide.with(context)
                     .using(new FirebaseImageLoader())
                     .load(mStorage)
                     .into(holder.imgView);

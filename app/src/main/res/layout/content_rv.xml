@@ -10,14 +10,14 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rcv"
-        android:layout_width="372dp"
-        android:layout_height="427dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchBar"
-        app:layout_constraintVertical_bias="0.238" />
+        app:layout_constraintVertical_bias="0.094" />
 
     <EditText
         android:id="@+id/searchBar"
@@ -53,5 +53,17 @@
         app:layout_constraintEnd_toStartOf="@+id/button10"
         app:layout_constraintStart_toEndOf="@+id/searchBar"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="268dp"
+        android:layout_marginStart="144dp"
+        android:text="No result found"
+        android:textColor="@android:color/holo_red_dark"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

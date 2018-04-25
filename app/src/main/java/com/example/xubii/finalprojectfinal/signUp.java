@@ -116,4 +116,10 @@ public class signUp extends AppCompatActivity {
                     }
                 });
     }
+    public void mobile(View v)
+    {
+        Intent intent=new Intent(this, mobileSignup.class);
+        startActivity(intent);
+        finish();
+    }
 }

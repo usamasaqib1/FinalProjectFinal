@@ -16,6 +16,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -94,7 +95,12 @@ public class rvActivity extends AppCompatActivity implements RecyclerView.OnItem
 
                 }
                 pd.dismiss();
-
+                if(groundList.isEmpty())
+                {
+                    rv.setVisibility(View.INVISIBLE);
+                    TextView textView=(TextView) findViewById(R.id.textView4);
+                    textView.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override

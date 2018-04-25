@@ -3,8 +3,6 @@ package com.example.xubii.finalprojectfinal;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -31,6 +29,7 @@ public class login extends AppCompatActivity {
         {
             Intent i = new Intent(this,searchScreen.class);
             startActivity(i);
+            finish();
         }
 
         mAuthListener =
@@ -74,7 +73,7 @@ public class login extends AppCompatActivity {
             password= a.getText().toString();
 
         mAuth.signInWithEmailAndPassword(email, password);
-        Intent i = new Intent(this,MainActivity.class);
+        Intent i = new Intent(this,searchScreen.class);
        startActivity(i);
     }
     /**
