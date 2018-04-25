@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    tools:context="com.example.aziz.myapplication.MainActivity">
+    tools:context="com.example.xubii.finalprojectfinal.login">
 
 
     <ImageView
@@ -19,7 +19,8 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ground" />
+
+        />
 
     <TextView
         android:id="@+id/textView2"
@@ -47,9 +48,9 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView"
         app:tabBackground="@color/colorPrimary"
         app:tabGravity="fill"
-        app:tabIndicatorColor="@color/tabindicator"
+        app:tabIndicatorColor="#FF0000"
         app:tabMode="fixed"
-        app:tabTextColor="@color/tabtext" />
+        app:tabTextColor="#888888" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager"
