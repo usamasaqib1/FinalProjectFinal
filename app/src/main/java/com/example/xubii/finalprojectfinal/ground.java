@@ -6,17 +6,17 @@ package com.example.xubii.finalprojectfinal;
 
 public class ground
 {
-    String groundName, ownerName, location, phone, email, image, details;
+    String groundName, ownerName, location, phone, email, image, details, mapCods;
     Integer ratting, votes;
 
     public ground()
     {
-         groundName= ownerName= location= phone= email= image=details="";
+         groundName= ownerName= location= phone= email= image=details=mapCods="";
          ratting= votes=0;
 
     }
 
-    public ground( String groundName, String ownerName, String location, String phone, String email, String image, String details) {
+    public ground( String groundName, String ownerName, String location, String phone, String email, String image, String details, String mapCods) {
        this.groundName=groundName;
         this.ownerName = ownerName;
         this.location = location;
@@ -24,8 +24,18 @@ public class ground
         this.email = email;
         this.image = image;
         this.details = details;
+        this.mapCods=mapCods;
+
         ratting=0;
         votes=0;
+    }
+
+    public String getMapCods() {
+        return mapCods;
+    }
+
+    public void setMapCods(String mapCods) {
+        this.mapCods = mapCods;
     }
 
     public String getDetails() {

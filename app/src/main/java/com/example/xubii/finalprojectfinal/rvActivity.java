@@ -25,6 +25,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class rvActivity extends AppCompatActivity implements RecyclerView.OnItemTouchListener {
@@ -86,6 +87,7 @@ public class rvActivity extends AppCompatActivity implements RecyclerView.OnItem
                             temp.setPhone(ds.child("phone").getValue(String.class));
                             temp.setRatting(ds.child("ratting").getValue(Integer.class));
                             temp.setVotes(ds.child("votes").getValue(Integer.class));
+                            temp.setMapCods(ds.child("mapCods").getValue(String.class));
                             groundList.add(temp);
                             adapter.notifyDataSetChanged();
                             break;
@@ -134,6 +136,14 @@ public class rvActivity extends AppCompatActivity implements RecyclerView.OnItem
                 if (child != null) {
                     //if tap was performed on some recyclerview row item
                     Integer i = rv.getChildAdapterPosition(child); //index of item which was clicked
+<<<<<<< HEAD
+=======
+                   String n= groundList.get(i).getGroundName()+" "+groundList.get(i).getLocation();
+                   ground tempG=groundList.get(i);
+                    Intent ii =  new Intent(rvActivity.this,mainGroundView.class);
+                    ii.putExtra("gName", (Serializable) tempG);
+                    startActivity(ii);
+>>>>>>> be674b6a12a629bba81d590124dcf59e227ef319
                 }
                 return true;
             }
