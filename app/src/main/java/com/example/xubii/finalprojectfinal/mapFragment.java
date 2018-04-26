@@ -76,7 +76,7 @@ String langLat;
                 }
                 googleMap.setMyLocationEnabled(true);
                 // For dropping a marker at a point on the Map
-                langLat=langLat.substring(10,langLat.length());
+                langLat=langLat.substring(10,langLat.length()-1);
                 String[]langLat2=langLat.split(",");
                 double latitude = Double.parseDouble(langLat2[0]);
                 double longitude = Double.parseDouble(langLat2[1]);

@@ -139,7 +139,7 @@ public class rvActivity extends AppCompatActivity implements RecyclerView.OnItem
                    String n= groundList.get(i).getGroundName()+" "+groundList.get(i).getLocation();
                    ground tempG=groundList.get(i);
                     Intent ii =  new Intent(rvActivity.this,mainGroundView.class);
-                    ii.putExtra("gName", (Serializable) tempG);
+                    ii.putExtra("gName",tempG.getGroundName()+" "+tempG.getLocation());
                     startActivity(ii);
                 }
                 return true;
