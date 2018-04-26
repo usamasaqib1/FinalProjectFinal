@@ -134,7 +134,6 @@ public class rvActivity extends AppCompatActivity implements RecyclerView.OnItem
                 if (child != null) {
                     //if tap was performed on some recyclerview row item
                     Integer i = rv.getChildAdapterPosition(child); //index of item which was clicked
-
                 }
                 return true;
             }
