@@ -62,6 +62,10 @@
             android:name=".signUp"
             android:label="@string/title_activity_sign_up"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".mainGroundView"
+            android:label="mainGroundView"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
