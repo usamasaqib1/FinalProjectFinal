@@ -36,7 +36,7 @@
         android:layout_marginStart="96dp"
         android:layout_marginTop="92dp"
         android:onClick="mobile"
-        android:text="sign in with mobile"
+        android:text="sign up with mobile"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.421"
         app:layout_constraintStart_toStartOf="parent"
