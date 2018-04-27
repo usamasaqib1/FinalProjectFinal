@@ -136,14 +136,12 @@ public class rvActivity extends AppCompatActivity implements RecyclerView.OnItem
                 if (child != null) {
                     //if tap was performed on some recyclerview row item
                     Integer i = rv.getChildAdapterPosition(child); //index of item which was clicked
-<<<<<<< HEAD
-=======
                    String n= groundList.get(i).getGroundName()+" "+groundList.get(i).getLocation();
                    ground tempG=groundList.get(i);
                     Intent ii =  new Intent(rvActivity.this,mainGroundView.class);
-                    ii.putExtra("gName", (Serializable) tempG);
+                    ii.putExtra("gName",tempG.getGroundName()+" "+tempG.getLocation());
                     startActivity(ii);
->>>>>>> be674b6a12a629bba81d590124dcf59e227ef319
+
                 }
                 return true;
             }
