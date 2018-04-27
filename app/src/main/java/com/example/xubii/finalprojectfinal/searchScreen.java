@@ -9,6 +9,9 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -39,6 +42,30 @@ public class searchScreen extends AppCompatActivity {
         //mFirebaseAnalytics.logEvent();
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.onlineuser,menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId())
+        {
+            case R.id.logout:
+                Intent i = new Intent(this, userOnline.class);
+                startActivity(i);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+
+        }
+
+    }
+
     public void search(View v)
     {
         Intent i = new Intent(this,rvActivity.class);
@@ -48,12 +75,12 @@ public class searchScreen extends AppCompatActivity {
         startActivity(i);
     }
 
-    public void userProfile(View v)
+    /*public void userProfile(View v)
     {
         Intent i = new Intent(this, userOnline.class);
         startActivity(i);
 
-    }
+    }*/
     public void speechToText(View view) {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
