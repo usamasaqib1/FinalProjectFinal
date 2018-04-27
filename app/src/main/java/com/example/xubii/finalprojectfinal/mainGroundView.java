@@ -4,6 +4,7 @@ package com.example.xubii.finalprojectfinal;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.media.Image;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -25,9 +26,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -41,11 +45,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
-public class mainGroundView extends AppCompatActivity implements OnMapReadyCallback{
+public class mainGroundView extends AppCompatActivity{
 
     private mainGroundView context;
-    private GoogleMap mMap;
+
     private TabLayout tabLayout;
     //private AppBarLayout appBarLayout;
     private ViewPager viewPager;
@@ -95,16 +101,30 @@ public class mainGroundView extends AppCompatActivity implements OnMapReadyCallb
                 //    appBarLayout = (AppBarLayout) findViewById(R.id.appbarid);
                 viewPager = (ViewPager) findViewById(R.id.view_pager);
 
+                ImageView ig=(ImageView) findViewById(R.id.imageView);
+                StorageReference mStorage = FirebaseStorage.getInstance().getReference().child("Images/"+temp.getGroundName()+" "+temp.getLocation()+".jpg");
+                Glide.with(mainGroundView.this)
+                        .using(new FirebaseImageLoader())
+                        .load(mStorage)
+                        .into(ig);
                 TextView tv = (TextView) findViewById(R.id.textView2);
                 tv.setText(temp.getGroundName());
-                Fragment m =new mapFragment(mainGroundView.this);
+
+                Fragment map =new mapFragment();
                 Bundle args=new Bundle();
                 args.putString("langLat",temp.getMapCods());
-                m.setArguments(args);
+                map.setArguments(args);
+
+
+                Fragment det=new detailFragment();
+                Bundle detArgs=new Bundle();
+                detArgs.putString("det",temp.getDetails());
+                det.setArguments(detArgs);
+
                 groundViewPagerAdapter adapter = new groundViewPagerAdapter(getSupportFragmentManager());
                 adapter.addFragment(new bookingFragment(),"Booking");
-                adapter.addFragment(new detailFragment(),"Detail");
-                adapter.addFragment(m,"Map");
+                adapter.addFragment(det,"Detail");
+                adapter.addFragment(map,"Map");
                 adapter.addFragment(new reviewFragment(),"Review");
                 viewPager.setAdapter(adapter);
                 tabLayout.setupWithViewPager(viewPager);
@@ -125,24 +145,4 @@ public class mainGroundView extends AppCompatActivity implements OnMapReadyCallb
 
     }
 
-
-    @Override
-    public void onMapReady(GoogleMap googleMap)
-    {
-        Toast.makeText(this, "FOLL MAP VIEW", Toast.LENGTH_SHORT).show();
-        mMap = googleMap;
-
-     //   googleMap.setMyLocationEnabled(true);
-        // For dropping a marker at a point on the Map
-        langLat=langLat.substring(10,langLat.length()-1);
-        String[]langLat2=langLat.split(",");
-        double latitude = Double.parseDouble(langLat2[0]);
-        double longitude = Double.parseDouble(langLat2[1]);
-        LatLng curLoc = new LatLng(latitude,longitude);
-        googleMap.addMarker(new MarkerOptions().position(curLoc).title("Marker Title"));
-
-        // For zooming automatically to the location of the marker
-        CameraPosition cameraPosition = new CameraPosition.Builder().target(curLoc).zoom(12).build();
-        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-    }
 }

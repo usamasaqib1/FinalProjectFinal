@@ -15,7 +15,6 @@
             android:layout_height="match_parent">
 
 
-<<<<<<< HEAD
             <com.google.android.gms.maps.MapView
                 android:id="@+id/mapView"
                 android:layout_width="378dp"
@@ -32,14 +31,13 @@
                 app:layout_constraintVertical_bias="1.0" />
 
 
-=======
+
             <fragment
                 android:id="@+id/map2"
                 android:name="com.google.android.gms.maps.SupportMapFragment"
                 android:layout_width="match_parent"
                 android:layout_height="274dp"
                 tools:context="com.example.xubii.finalprojectfinal.MapsActivity" />
->>>>>>> ad9c8055287a0cdd2af35cbfe60895f4f22abd2f
         </android.support.constraint.ConstraintLayout>
 
 

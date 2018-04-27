@@ -14,7 +14,7 @@
         android:id="@+id/imageView"
         android:layout_width="383dp"
         android:layout_height="197dp"
-        android:scaleType="fitXY"
+        android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,24 +26,22 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:text="Lawrence Cricket Ground"
-        android:textColor="@color/colorPrimaryDark"
+        android:layout_marginTop="8dp"
+        android:textColor="@android:color/black"
         android:textSize="22dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/tablayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tablayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="369dp"
+        android:layout_height="49dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
         app:tabBackground="@color/colorPrimary"
@@ -54,20 +52,17 @@
 
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="347dp"
+        android:layout_height="312dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tablayout"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@+id/tablayout">
 
     </android.support.v4.view.ViewPager>
 
-
 </android.support.constraint.ConstraintLayout>
+
