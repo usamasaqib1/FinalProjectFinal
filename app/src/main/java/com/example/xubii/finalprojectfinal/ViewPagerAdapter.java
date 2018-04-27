@@ -46,9 +46,4 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
 
 
-    //ArrayList<UserDefinedFileAttributeView> abc;
-    //AZIZ KUTTA HY.
-    //AZIZ BHT BARA KUTTA HY
-
-
 }
