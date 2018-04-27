@@ -46,7 +46,7 @@ public class StartScreen extends AppCompatActivity {
             }
             else
             {
-                Intent i = new Intent(this,login.class);
+                Intent i = new Intent(this,signUp.class);
                 startActivity(i);
                 finish();
             }

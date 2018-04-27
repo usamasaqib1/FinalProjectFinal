@@ -1,6 +1,9 @@
 package com.example.xubii.finalprojectfinal;
 
+import android.content.ContextWrapper;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -9,27 +12,47 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.model.file_descriptor.FileDescriptorModelLoader;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.concurrent.ExecutionException;
 
 public class signUp extends AppCompatActivity {
 
     CallbackManager mCallbackManager;
     private static final String TAG="FBLOG";
     private FirebaseAuth mAuth;
+    FirebaseDatabase fbDB;
+    DatabaseReference mRef;
+    StorageReference mStorage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,6 +110,7 @@ public class signUp extends AppCompatActivity {
 
     protected void updateUI()
     {
+
         Toast.makeText(signUp.this, "Logged in",Toast.LENGTH_SHORT).show();
         Intent intent=new Intent(this,searchScreen.class);
         startActivity(intent);
@@ -103,7 +127,38 @@ public class signUp extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI();
+                            OnlineUserInformation temp = new OnlineUserInformation();
+                           temp.setName( user.getDisplayName());
+                           temp.setType("fb");
+                           temp.setUid(user.getUid());
+                           temp.setContact(user.getProviderId());
+                            fbDB= FirebaseDatabase.getInstance() ;
+
+                            Uri selectedImage=user.getPhotoUrl();
+
+
+                            mStorage= FirebaseStorage.getInstance().getReference();
+                            StorageReference mSRef = mStorage.child("Images/" + user.getUid() + ".jpg");
+                            mSRef.putFile(selectedImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                    Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                                }
+                            })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception exception) {
+                                            Toast.makeText(signUp.this, "image upload fail", Toast.LENGTH_SHORT).show();
+                                            // Handle unsuccessful uploads
+                                            // ...
+                                        }
+                                    });
+
+                            mRef= fbDB.getReference();
+                            mRef.child("Users").child(user.getUid()).setValue(temp);
+
+
+                           updateUI();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
@@ -121,5 +176,23 @@ public class signUp extends AppCompatActivity {
         Intent intent=new Intent(this, mobileSignup.class);
         startActivity(intent);
         finish();
+    }
+    private Uri saveToInternalStorage(Bitmap bitmap){
+        ContextWrapper wrapper = new ContextWrapper(getApplicationContext());
+        File file = wrapper.getDir("Images",MODE_PRIVATE);
+        file = new File(file, "UniqueFileName"+".jpg");
+        try{
+            OutputStream stream = null;
+            stream = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.JPEG,100,stream);
+            stream.flush();
+            stream.close();
+        }catch (IOException e) // Catch the exception
+        {
+            e.printStackTrace();
+        }
+        // Parse the gallery image url to uri
+        Uri savedImageURI = Uri.parse(file.getAbsolutePath());
+        return savedImageURI;
     }
 }

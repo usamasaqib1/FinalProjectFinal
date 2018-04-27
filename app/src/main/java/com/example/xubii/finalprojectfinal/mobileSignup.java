@@ -112,7 +112,9 @@ Boolean mVarificationInProgress;
                         //    Log.d(TAG, "signInWithCredential:success");
 
                             FirebaseUser user = task.getResult().getUser();
-                            Intent i=new Intent(mobileSignup.this, searchScreen.class);
+
+
+                            Intent i=new Intent(mobileSignup.this, SignUpMob.class);
                             startActivity(i);
                             finish();
                             // ...
